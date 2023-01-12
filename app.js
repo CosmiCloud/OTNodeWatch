@@ -72,7 +72,6 @@ Cartel ask: 0.25`
         }
 
     await connection.end();
-    process.exit()
 }
 
 
