@@ -66,7 +66,9 @@ Cartel ask: 0.25`
 
             console.log(msg)
             bot.sendMessage(chatId, msg);
-            bot.sendMessage(chatId2, msg);
+            if(chatId2){
+                bot.sendMessage(chatId2, msg);
+            }
         }
 
     await connection.end();
