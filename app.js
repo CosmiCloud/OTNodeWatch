@@ -60,7 +60,8 @@ async function marketavg(){
 
             msg = `Nodes: ${total_nodes}
 Avg ask: ${ask_avg.toFixed(4)}
-Avg stake: ${stake_avg.toFixed(2)}`
+Avg stake: ${stake_avg.toFixed(2)}
+Cartel ask: 0.25`
 
 
             console.log(msg)
