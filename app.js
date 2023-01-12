@@ -5,9 +5,9 @@ const bot = new TelegramBot(token, {polling: true});
 const chatId  = process.env.CHATID;
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'admin',
+  host     : process.env.DBHOST,
+  user     : process.env.USER,
+  password : process.env.PASSWORD,
   database : 'operationaldb'
 });
   
