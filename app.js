@@ -1,6 +1,3 @@
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-    
 const TelegramBot = require('node-telegram-bot-api');
 const token = '5458649081:AAHUKWfYwVKLjx3Sol1NXGUpdVp5i0GuKCE';
 const bot = new TelegramBot(token, {polling: true});
