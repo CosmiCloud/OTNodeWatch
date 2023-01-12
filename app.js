@@ -3,6 +3,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = process.env.TOKEN;
 const bot = new TelegramBot(token, {polling: true});
 const chatId  = process.env.CHATID;
+const chatId2  = process.env.CHATID2;
 const mysql = require('mysql');
 const connection = mysql.createConnection({
   host     : process.env.DBHOST,
@@ -64,9 +65,11 @@ Avg stake: ${stake_avg.toFixed(2)}`
 
             console.log(msg)
             bot.sendMessage(chatId, msg);
+            bot.sendMessage(chatId2, msg);
         }
 
     await connection.end();
+    process.exit()
 }
 
 
