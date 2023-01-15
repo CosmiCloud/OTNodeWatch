@@ -30,8 +30,7 @@ const team_nodes = [
                     "QmdxdGWjRqtE2wdoaoWQFMqrUPrsnFoLJ3QcCFDJ3fPtTt",
                     "Qmetd2wyq6yTqYcUG7DiUSiJmSPVVqtg6ZyeKa7Gastflk",
                     "QmNkmydWxHqj9voSjWkcVewefrDxEuwfyBkbGkwh4oZuWY",
-                    "QmPMNPPsr4iyoTEPwKiWUfwHQEDSDL4Fbf457k8deglzxr",
-                    "QmSjLxW54uyPTKtJ3LZcNCmjZReKA2PyieHuuGKkkhA5vT"
+                    "QmPMNPPsr4iyoTEPwKiWUfwHQEDSDL4Fbf457k8deglzxr"
                 ]
   
 async function recordNodes(){
