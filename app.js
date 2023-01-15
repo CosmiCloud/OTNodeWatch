@@ -6,9 +6,9 @@ const chatId  = process.env.CHATID;
 const chatId2  = process.env.CHATID2;
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-  host     : process.env.DBHOST,
-  user     : process.env.USER,
-  password : process.env.PASSWORD,
+  host     : 'localhost',
+  user     : 'root',
+  password : 'admin',
   database : 'operationaldb'
 });
   
