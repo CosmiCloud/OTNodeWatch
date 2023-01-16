@@ -69,9 +69,10 @@ Alliance ask: 0.25`
             if(chatId2){
                 bot.sendMessage(chatId2, msg);
             }
-        }
 
-    await connection.end();
+            await connection.end();
+            await process.exit();
+        }
 }
 
 

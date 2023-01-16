@@ -104,6 +104,9 @@ async function recordNodes(){
             msg = `${tl_node_change_count} Trace Labs nodes have changed their asks. The avg. TL node ask is now ${tl_node_avg.toFixed(4)}`
             await tellBot(msg);
         }
+
+        await connection.end();
+        await process.exit();
     }
 
     async function tellBot(msg){
@@ -112,9 +115,6 @@ async function recordNodes(){
             bot.sendMessage(chatId2, msg);
         }
     }
-
-    await connection.end();
-    process.exit;
 }
 
 recordNodes();
