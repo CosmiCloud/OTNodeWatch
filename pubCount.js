@@ -12,6 +12,8 @@ async function pubCount () {
     `sudo journalctl -u otnode --since "1 hour ago" | grep "has been successfully inserted!" | wc -l`
   )
 
+  console.log(publishes_last_hour)
+
   msg = `${publishes_last_hour} have been minted in the last hour.`
 
   console.log(msg)
@@ -19,7 +21,6 @@ async function pubCount () {
   await bot.sendMessage(chatId2, msg)
 
   //await bot.stopPolling();
-  await connection.end()
   await process.exit()
 }
 
