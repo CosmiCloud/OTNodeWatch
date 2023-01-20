@@ -1,4 +1,6 @@
 require('dotenv').config()
+const util = require('util')
+const exec = util.promisify(require('child_process').exec)
 const TelegramBot = require('node-telegram-bot-api')
 const token = process.env.TOKEN
 const bot = new TelegramBot(token, { polling: true })
