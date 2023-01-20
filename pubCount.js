@@ -14,9 +14,7 @@ async function pubCount () {
 
   console.log(publishes_last_hour)
 
-  msg = `${JSON.stringify(
-    publishes_last_hour.stdout
-  )} assets have been minted in the last hour.`
+  msg = `${publishes_last_hour.stdout} assets have been minted in the last hour.`
 
   console.log(msg)
   await bot.sendMessage(chatId, msg)
