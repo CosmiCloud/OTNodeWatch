@@ -1,120 +1,151 @@
 require('dotenv').config()
-const TelegramBot = require('node-telegram-bot-api');
-const token = process.env.TOKEN;
-const bot = new TelegramBot(token, {polling: true});
-const chatId  = process.env.CHATID;
-const chatId2  = process.env.CHATID2;
-const mysql = require('mysql');
+const TelegramBot = require('node-telegram-bot-api')
+const token = process.env.TOKEN
+const bot = new TelegramBot(token, { polling: true })
+const chatId = process.env.CHATID
+const chatId2 = process.env.CHATID2
+const mysql = require('mysql')
 const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'admin',
-  database : 'operationaldb'
-});
-const db = require("better-sqlite3")(process.env.STATDB, {
-    verbose: console.log,
-  });
+  host: 'localhost',
+  user: 'root',
+  password: 'admin',
+  database: 'operationaldb'
+})
+const db = require('better-sqlite3')(process.env.STATDB, {
+  verbose: console.log
+})
 
 const team_nodes = [
-                    "Qmaa96tesPwJCBjnhJgPBfpFg4HKVU2BLE2a04g2bg9hVT",
-                    "QmaSu1NT7R5XYSqvYHwxPmaPBYZKMyBfEViXtBsJg9YWae",
-                    "QmaVYtFZcraSnVMpzHhdxHXZHb6juXAQWZ5taShWHWQSUh",
-                    "Qmb7eiBwhE6JqEWFXSJ7qxJdHZGEfBcfmSZUr8uAEbvcFg",
-                    "QmcB3BHQhUzRmLNzo2rAZGjLPFHUTeGhFLji9AgeZfeQWs",
-                    "Qmcms276Yrm3sf6jZx75X83W3CnWwadfYQ6YerefWAZuuH",
-                    "QmbaHGQByXY8TvBwx1R2eQLt6XXpKeRAg4kEbRlyDjmVuM",
-                    "QmbQeQsPytKnBVbRJsLosGZGPXcUaBMbgfeB6rKbiBDxGc",
-                    "Qmbt6JkNzKhtxJz4CyBCisjbrz39qblziWX9kzez6dFkG9",
-                    "QmbUXe8cNfvtUumZr1CZEibGmYHu5kBjhu5Xwm3PeGsjXY",
-                    "Qme8odkEfiHHNp2Pa4qkUJiWsqsH8nVrrcohNNN4HhYpkJ",
-                    "QmdxdGWjRqtE2wdoaoWQFMqrUPrsnFoLJ3QcCFDJ3fPtTt",
-                    "Qmetd2wyq6yTqYcUG7DiUSiJmSPVVqtg6ZyeKa7Gastflk",
-                    "QmNkmydWxHqj9voSjWkcVewefrDxEuwfyBkbGkwh4oZuWY",
-                    "QmPMNPPsr4iyoTEPwKiWUfwHQEDSDL4Fbf457k8deglzxr"
-                ]
-  
-async function recordNodes(){
-    await connection.connect();
+  'QmZSFcfQ9DesB4ZjkT3qJ3VyCYDLFRYbC5U1VyVPN47dwE',
+  'QmZceSUg7vVEXqcHnQbKMihZ4Kn5etLXbHb5wSzT8R4J1K',
+  'QmZ7xMtgJ1vBey5ifvD6yFsxH4VmSQVwtKrX8zNuZ2uiKb',
+  'QmYCCXqCe5LHHi9ZxZTw1xTcYXZ47cwk8LmTRAcqWW53e1',
+  'QmXkL415jBmkuzi183ALtmCsdEfm3XiUNxLdqKwuUjwCtx',
+  'QmVWyGofF7fAiKXyAQyyAKg9YEre7xvggMwqjCz1u4vJ7Y',
+  'QmVQfYT9c4iaBmiFZsNcQZJJJbDKuodBHUXSexfnwuUnwg',
+  'QmUNnGWcQgeat54n3DpLRMHSHpvcGDhjnL2wdEWBno9eEC',
+  'QmTEisCvd7eYiANqVGvHd6RGpQ3ru1pd77Qxnn97PZP3i5',
+  'QmSHNjGfzapQL6sNrZTSCL6NCDsjH8i65BGqSjmJ4ZDu9T',
+  'QmRiWNNEc9WQAfjX7tM2sdsunbKJTiywWdsYGw6W8Uo1Q1',
+  'QmQwA2Hz8zNchVjGX4TWvqySCP5cbkLLVjUSvRsCHhQ4SB',
+  'QmQHeX9fHNjdBZxHVtuUQDdQDQ2XnvxaxdG7Y5fgiBimLQ',
+  'QmPTT7R3rwKUawLJxEXwcerZfqC2rkYWr2uZiXUo6ftFoS',
+  'QmPptt8g1bdJbPic8bZPUY3TqGdDPuJC8jtY5pjR3Gkqan',
+  'QmPMNPPsr4iyoTEPwKiWUfwHQEDSDL4Fbf457k8deg1zxr',
+  'QmNkmydWxHqj9voSjWkcVewefrDxEuwfyBkbGkwh4oZuWY',
+  'Qmetd2wyq6yTqYcUG7DiUSiJmSPVVqtg6ZyeKa7Gastf1k',
+  'Qmeay8Jy7nMfi7i4ykeEg7qRS5Ba4NpwSH2aQTxXmjCrbL',
+  'QmeaeLpQENK5eHHMF6Kt5iqeFtqADV8vUzcp3jYeSghCQy',
+  'QmdxdGWjRqtE2wdoaoWQFMqrUPrsnFoLJ3QcCFDJ3fPtTt',
+  'QmdS3NwRXqmHpy6yzZ9k49Sau8Eb67zah1CKZ7nNpLMHoD',
+  'QmcB3BHQhUzRmLNzo2rAZGjLPFHUTeGhFLji9AgeZfeQWs',
+  'QmbUXe8cNfvtUumZr1CZEibGmYHu5kBjhu5Xwm3PeGsjXY',
+  'Qmbt6JkNzKhtxJz4CyBCisjbrz39qb1ziWX9kzez6dFkG9',
+  'QmbaHGQByXY8TvBwx1R2eQLt6XXpKeRAg4kEbR1yDjmVuM',
+  'Qmb7eiBwhE6JqEWFXSJ7qxJdHZGEfBcfmSZUr8uAEbvcFg',
+  'QmaVYtFZcraSnVMpzHhdxHXZHb6juXAQWZ5taShWHWQSUh',
+  'QmaSu1NT7R5XYSqvYHwxPmaPBYzKMyBfEViXtBsJg9YWae'
+]
 
-    node_operators = await db
-    .prepare("SELECT peer_id, operator, current_ask, previous_ask, date_last_changed FROM node_operators LIMIT 1000")
-    .all();
+async function recordNodes () {
+  await connection.connect()
 
-    console.log(node_operators)
+  node_operators = await db
+    .prepare(
+      'SELECT peer_id, operator, current_ask, previous_ask, date_last_changed FROM node_operators LIMIT 1000'
+    )
+    .all()
 
-    shardTable = [];
-    await connection.query('SELECT * from operationaldb.shard', function (error, row) {
-        if(error) {
-            throw error;
-          } else {
-            setValue(row);
-          }
-      });
+  console.log(node_operators)
 
-    async function setValue(value) {
-        shardTable = value;
-        tl_node_count = 0
-        tl_node_ask = 0
-        tl_node_change_count = 0
+  shardTable = []
+  await connection.query(
+    'SELECT * from operationaldb.shard',
+    function (error, row) {
+      if (error) {
+        throw error
+      } else {
+        setValue(row)
+      }
+    }
+  )
 
-        for (i = 0; i < shardTable.length; ++i) {
-            shard_operator = shardTable[i]
+  async function setValue (value) {
+    shardTable = value
+    tl_node_count = 0
+    tl_node_ask = 0
+    tl_node_change_count = 0
 
-            let operator;
-            let previous_ask;
-            let node_op_index;
+    for (i = 0; i < shardTable.length; ++i) {
+      shard_operator = shardTable[i]
 
-            tl_node_found = await team_nodes.includes(shard_operator.peer_id);
-            if(tl_node_found){
-                operator = "Trace labs"
-                tl_node_count = tl_node_count + 1
-                tl_node_ask = tl_node_ask + Number(shard_operator.ask)
-            }
-            
-            ask_changed = "no"
-            if(node_operators){
-                node_op_index = await node_operators.findIndex(noop => noop.peer_id == shard_operator.peer_id);
-            }
+      let operator
+      let previous_ask
+      let node_op_index
 
-            exec_type = "INSERT"
-            if(node_op_index != -1){
-                exec_type = "REPLACE"
-                if(node_operators[node_op_index].current_ask != shard_operator.ask){
-                    previous_ask = node_operators[node_op_index].current_ask
-                    ask_changed = "yes"
-                }
-            }
+      tl_node_found = await team_nodes.includes(shard_operator.peer_id)
+      if (tl_node_found) {
+        operator = 'Trace labs'
+        tl_node_count = tl_node_count + 1
+        tl_node_ask = tl_node_ask + Number(shard_operator.ask)
+      }
 
-            timestamp = new Date();
-            abs_timestamp = Math.abs(timestamp);
+      ask_changed = 'no'
+      if (node_operators) {
+        node_op_index = await node_operators.findIndex(
+          noop => noop.peer_id == shard_operator.peer_id
+        )
+      }
 
-            await db
-                .prepare(`${exec_type} INTO node_operators (peer_id, operator, current_ask, previous_ask, date_last_changed) VALUES (?, ?, ?, ?, ?)`)
-                .run(shard_operator.peer_id,operator,shard_operator.ask,previous_ask,abs_timestamp);
-
-            console.log(ask_changed)
-            if(ask_changed == "yes" && tl_node_found){
-                tl_node_change_count = tl_node_change_count + 1
-            }      
-        }  
-
-        if(tl_node_change_count > 0){
-            tl_node_avg = tl_node_ask / tl_node_count
-
-            msg = `${tl_node_change_count} Trace Labs nodes have changed their asks. The avg. TL node ask is now ${tl_node_avg.toFixed(4)}`
-            await tellBot(msg);
+      exec_type = 'INSERT'
+      if (node_op_index != -1) {
+        exec_type = 'REPLACE'
+        if (node_operators[node_op_index].current_ask != shard_operator.ask) {
+          previous_ask = node_operators[node_op_index].current_ask
+          ask_changed = 'yes'
         }
+      }
 
-        await connection.end();
-        await process.exit();
+      timestamp = new Date()
+      abs_timestamp = Math.abs(timestamp)
+
+      await db
+        .prepare(
+          `${exec_type} INTO node_operators (peer_id, operator, current_ask, previous_ask, date_last_changed) VALUES (?, ?, ?, ?, ?)`
+        )
+        .run(
+          shard_operator.peer_id,
+          operator,
+          shard_operator.ask,
+          previous_ask,
+          abs_timestamp
+        )
+
+      console.log(ask_changed)
+      if (ask_changed == 'yes' && tl_node_found) {
+        tl_node_change_count = tl_node_change_count + 1
+      }
     }
 
-    async function tellBot(msg){
-        bot.sendMessage(chatId, msg);
-        if(chatId2){
-            bot.sendMessage(chatId2, msg);
-        }
+    if (tl_node_change_count > 0) {
+      tl_node_avg = tl_node_ask / tl_node_count
+
+      msg = `${tl_node_change_count} Trace Labs nodes have changed their asks. The avg. TL node ask is now ${tl_node_avg.toFixed(
+        4
+      )}`
+      await tellBot(msg)
     }
+
+    await connection.end()
+    await process.exit()
+  }
+
+  async function tellBot (msg) {
+    bot.sendMessage(chatId, msg)
+    if (chatId2) {
+      bot.sendMessage(chatId2, msg)
+    }
+  }
 }
 
-recordNodes();
+recordNodes()
