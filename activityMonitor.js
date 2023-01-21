@@ -67,7 +67,7 @@ Alliance ask: 0.21 - 0.24`
 
     console.log(msg)
     await bot.sendMessage(chatId, msg)
-    await bot.sendMessage(chatId2, msg)
+    //await bot.sendMessage(chatId2, msg)
 
     //await bot.stopPolling();
     await connection.end()

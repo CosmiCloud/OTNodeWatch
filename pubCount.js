@@ -9,21 +9,21 @@ const chatId2 = process.env.CHATID2
 
 async function pubCount () {
   publishes_last_hour = await exec(
-    `sudo journalctl -u otnode --since "1 hour ago" | grep "has been successfully inserted!" | wc -l`
+    `sudo journalctl -u otnode --since "1 hour ago" | grep "calculateProof" | wc -l`
   )
 
   console.log(publishes_last_hour)
 
-  msg = `${publishes_last_hour.stdout.replace(
-    /[\n\t\r]/g,
-    ''
-  )} assets have been minted in the last hour.`
+  if (publishes_last_hour.stdout.replace(/[\n\t\r]/g) == '0') {
+    msg = `Cosmi's node has published ${publishes_last_hour.stdout.replace(
+      /[\n\t\r]/g,
+      ''
+    )} asset mints in the last hour.`
 
-  console.log(msg)
-  await bot.sendMessage(chatId, msg)
-  await bot.sendMessage(chatId2, msg)
+    console.log(msg)
+    await bot.sendMessage(chatId, msg)
+  }
 
-  //await bot.stopPolling();
   await process.exit()
 }
 
