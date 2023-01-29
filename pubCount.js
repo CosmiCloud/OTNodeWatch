@@ -12,13 +12,11 @@ async function pubCount () {
     `sudo journalctl -u otnode --since "1 hour ago" | grep "calculateProof" | wc -l`
   )
 
+  publishes_last_hour = Number(publishes_last_hour.stdout.replace(/[\n\t\r]/g))
   console.log(publishes_last_hour)
 
-  if (publishes_last_hour.stdout.replace(/[\n\t\r]/g) == '0') {
-    msg = `Cosmi's node has published ${publishes_last_hour.stdout.replace(
-      /[\n\t\r]/g,
-      ''
-    )} asset mints in the last hour.`
+  if (publishes_last_hour != 0) {
+    msg = `Cosmi's node has published ${publishes_last_hour} asset mints in the last hour.`
 
     console.log(msg)
     await bot.sendMessage(chatId, msg)
